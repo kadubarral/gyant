@@ -5,8 +5,13 @@
 - eksctl
 
 ```sh
+# create cluster
 $ eksctl create cluster -f cluster.yaml
 
+# install metric server
+$ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.7/components.yaml
+
+# Pipeline grants and config
 $ TRUST="{ \"Version\": \"2012-10-17\", \"Statement\": [ { \"Effect\": \"Allow\", \"Principal\": { \"AWS\": \"arn:aws:iam::627938768582:root\" }, \"Action\": \"sts:AssumeRole\" } ] }"
 
 $ echo '{ "Version": "2012-10-17", "Statement": [ { "Effect": "Allow", "Action": "eks:Describe*", "Resource": "*" } ] }' > /tmp/iam-role-policy
@@ -28,7 +33,7 @@ $ kubectl patch configmap/aws-auth -n kube-system --patch "$(cat /tmp/aws-auth-p
 
 ## Access application
 
-Application is running on http://a2241f451f9a24a1ea5d0423a5ff4dea-148851880.eu-west-3.elb.amazonaws.com but to have access is necessary to add your public IP address at "gyant.yaml"
+Application is running on http://a2241f451f9a24a1ea5d0423a5ff4dea-148851880.eu-west-3.elb.amazonaws.com but to have access is necessary to add your public IP address at "infra/svc.yaml"
 
 ```
   loadBalancerSourceRanges:
@@ -37,7 +42,7 @@ Application is running on http://a2241f451f9a24a1ea5d0423a5ff4dea-148851880.eu-w
 ![app](app.png)
 
 ## Horizontal Pod Autoscale
-Using kubernetes HPA the application is configured to scale based on CPU utilization.
+Using kubernetes HPA the application is configured to scale based on CPU utilization. This rule can be changed at "infra/hpa.yaml".
 
 ## CloudWatch Monitoring
 ```sh
