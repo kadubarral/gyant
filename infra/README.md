@@ -27,3 +27,5 @@ flux create kustomization gyant \
  --validation=client \
  --interval=1h \
  --export > ./gyant-cluster/gyant-sync.yaml
+
+git add -A && git commit -m "add gitops deploy" && git push
