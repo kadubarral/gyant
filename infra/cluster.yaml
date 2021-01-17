@@ -6,6 +6,6 @@ metadata:
 nodeGroups:
   - name: worker-group
     instanceType: t2.micro
-    desiredCapacity: 2
-    minSize: 2
-    maxSize: 3
+    desiredCapacity: 3
+    minSize: 3
+    maxSize: 5
