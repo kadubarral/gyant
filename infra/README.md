@@ -34,8 +34,10 @@ Application is running on http://a2241f451f9a24a1ea5d0423a5ff4dea-148851880.eu-w
   loadBalancerSourceRanges:
   - "213.22.0.0/16"
 ```
+![app](app.png)
 
 ## Horizontal Pod Autoscale
+Using kubernetes HPA the application is configured to scale based on CPU utilization.
 
 ## CloudWatch Monitoring
 ```sh
