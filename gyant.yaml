@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: gyant
-        image: IMAGE
+        image: CONTAINER_IMAGE
         ports:
         - containerPort: 3000
 ---
