@@ -25,3 +25,29 @@ $ kubectl get -n kube-system configmap/aws-auth -o yaml | awk "/mapRoles: \|/{pr
 
 $ kubectl patch configmap/aws-auth -n kube-system --patch "$(cat /tmp/aws-auth-patch.yml)"
 ```
+
+## Access application
+
+Application is running on http://a2241f451f9a24a1ea5d0423a5ff4dea-148851880.eu-west-3.elb.amazonaws.com but to have access is necessary to add your public IP address at "gyant.yaml"
+
+```
+  loadBalancerSourceRanges:
+  - "213.22.0.0/16"
+```
+
+## Horizontal Pod Autoscale
+
+## CloudWatch Monitoring
+```sh
+$ kubectl apply -f https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/cloudwatch-namespace.yaml
+
+$ kubectl apply -f https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/cwagent/cwagent-serviceaccount.yaml
+
+$ curl -O https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/cwagent/cwagent-configmap.yaml
+
+$ kubectl apply -f cwagent-configmap.yaml
+
+$ kubectl apply -f https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/cwagent/cwagent-daemonset.yaml
+
+$ kubectl get pods -n amazon-cloudwatch
+```
